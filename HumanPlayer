@@ -1,0 +1,48 @@
+package gameCode;
+import java.util.Scanner;
+
+public class HumanPlayer extends Player {
+    private Scanner scanner;
+
+    public HumanPlayer(Board board, Scanner scanner) {
+        super(board);
+        this.scanner = scanner;
+    }
+
+    @Override
+    public int[] chooseAttack() {
+
+        while (true) {
+            try {
+                System.out.print("Enter coordinate (A1 - J10): ");
+                String input = scanner.nextLine().toUpperCase().trim();
+
+                int[] coords = parseCoordinate(input);
+                return coords;
+
+            } catch (Exception e) {
+                System.out.println("Invalid format! Example: B7 or J10");
+            }
+        }
+    }
+
+
+    // Convert A1 → (0,0)
+    private int[] parseCoordinate(String input) {
+
+        if (input.length() < 2 || input.length() > 3) {
+            throw new IllegalArgumentException("Bad input");
+        }
+
+        char rowChar = input.charAt(0);
+        int row = rowChar - 'A';
+
+        int col = Integer.parseInt(input.substring(1)) - 1;
+
+        if (row < 0 || row >= 10 || col < 0 || col >= 10) {
+            throw new IllegalArgumentException("Out of bounds");
+        }
+
+        return new int[]{row, col};
+    }
+}
