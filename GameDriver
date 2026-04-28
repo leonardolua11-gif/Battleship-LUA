@@ -1,0 +1,50 @@
+package gameCode;
+import java.util.Scanner;
+
+public class GameDriver {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Board board = new Board(10);
+
+        int choice = 0;
+
+        while (true) {
+            try {
+                System.out.print("Choose preset (1-3): ");
+                choice = Integer.parseInt(scanner.nextLine());
+                break;
+            } catch (Exception e) {
+                System.out.println("Enter a valid number!");
+            }
+        }
+
+        PresetBoards.load(board, choice);
+
+        while (true) {
+            board.printBoard(false);
+
+            try {
+                System.out.print("Row: ");
+                int row = Integer.parseInt(scanner.nextLine());
+
+                System.out.print("Col: ");
+                int col = Integer.parseInt(scanner.nextLine());
+
+                boolean hit = board.attack(row, col);
+
+                System.out.println(hit ? "Hit!" : "Miss!");
+
+                if (board.allShipsSunk()) {
+                    System.out.println("You win!");
+                    board.printBoard(true);
+                    break;
+                }
+
+            } catch (Exception e) {
+                System.out.println("Invalid input! Use numbers only.");
+            }
+        }
+
+        scanner.close();
+    }
+}
