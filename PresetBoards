@@ -1,0 +1,79 @@
+package gameCode;
+public class PresetBoards {
+
+    public static void load(Board board, int choice) {
+
+        if (choice == 1) {
+            preset1(board);
+        } 
+        else if (choice == 2) {
+            preset2(board);
+        } 
+        else if (choice == 3) {
+            preset3(board);
+        } 
+        else {
+            System.out.println("Invalid choice. Loading preset 1.");
+            preset1(board);
+        }
+    }
+
+    private static void preset1(Board board) {
+
+        try {
+            board.addShip(new Ship(5, 0, 0, true));
+        } catch (Exception e) {
+            System.out.println("Preset1 ship error: " + e);
+        }
+
+        try {
+            board.addShip(new Ship(4, 2, 2, false));
+        } catch (Exception e) {
+            System.out.println("Preset1 ship error: " + e);
+        }
+
+        try {
+            board.addShip(new Ship(3, 5, 0, true));
+        } catch (Exception e) {
+            System.out.println("Preset1 ship error: " + e);
+        }
+
+        try {
+            board.addShip(new Ship(3, 7, 5, false));
+        } catch (Exception e) {
+            System.out.println("Preset1 ship error: " + e);
+        }
+
+        try {
+            board.addShip(new Ship(2, 9, 7, true));
+        } catch (Exception e) {
+            System.out.println("Preset1 ship error: " + e);
+        }
+    }
+
+    private static void preset2(Board board) {
+
+        try {
+            board.addShip(new Ship(5, 1, 1, false));
+            board.addShip(new Ship(4, 0, 6, true));
+            board.addShip(new Ship(3, 4, 3, true));
+            board.addShip(new Ship(3, 6, 8, false));
+            board.addShip(new Ship(2, 9, 0, true));
+        } catch (Exception e) {
+            System.out.println("Preset2 error: " + e);
+        }
+    }
+
+    private static void preset3(Board board) {
+
+        try {
+            board.addShip(new Ship(5, 5, 0, true));
+            board.addShip(new Ship(4, 0, 0, false));
+            board.addShip(new Ship(3, 2, 6, true));
+            board.addShip(new Ship(3, 7, 2, false));
+            board.addShip(new Ship(2, 9, 8, true));
+        } catch (Exception e) {
+            System.out.println("Preset3 error: " + e);
+        }
+    }
+}
