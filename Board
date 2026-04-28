@@ -1,0 +1,125 @@
+package gameCode;
+import java.util.ArrayList;
+
+public class Board {
+    private char[][] grid;
+    private ArrayList<Ship> ships;
+    private int size;
+
+    public Board(int size) {
+        this.size = size;
+        grid = new char[size][size];
+        ships = new ArrayList<>();
+
+        // fill with water
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                grid[i][j] = '~';
+            }
+        }
+    }
+
+    public static String toCoordinate(int row, int col) {
+        return (char) ('A' + row) + Integer.toString(col + 1);
+    }
+    
+    // Check bounds
+    public boolean isValidPosition(int row, int col) {
+        return row >= 0 && row < size && col >= 0 && col < size;
+    }
+
+    // Add ship safely
+    public void addShip(Ship ship) {
+        // validate placement first
+        for (int i = 0; i < ship.getSize(); i++) {
+            int r = ship.isHorizontal() ? ship.startRow : ship.startRow + i;
+            int c = ship.isHorizontal() ? ship.startCol + i : ship.startCol;
+
+            if (!isValidPosition(r, c)) {
+                throw new IllegalArgumentException("Ship out of bounds!");
+            }
+
+            if (grid[r][c] == 'S') {
+                throw new IllegalArgumentException("Ships overlap!");
+            }
+        }
+
+        ships.add(ship);
+
+        // place ship
+        for (int i = 0; i < ship.getSize(); i++) {
+            int r = ship.isHorizontal() ? ship.startRow : ship.startRow + i;
+            int c = ship.isHorizontal() ? ship.startCol + i : ship.startCol;
+
+            grid[r][c] = 'S';
+        }
+    }
+
+    // Attack logic
+    public String attack(int row, int col) {
+        if (!isValidPosition(row, col)) {
+            return "Out of bounds!";
+        }
+
+        if (grid[row][col] == 'X' || grid[row][col] == 'O') {
+            return "Already attacked!";
+        }
+
+        for (Ship ship : ships) {
+            if (ship.occupies(row, col)) {
+                ship.hit();
+                grid[row][col] = 'X';
+                return "Hit!";
+            }
+        }
+
+        grid[row][col] = 'O';
+        return "Miss!";
+    }
+
+    // Win condition
+    public boolean allShipsSunk() {
+        for (Ship ship : ships) {
+            if (!ship.isSunk()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Pretty print board (10x10 friendly)
+    public void printBoard(boolean showShips) {
+
+        // top header (A J coordinates)
+        System.out.print("   ");
+        for (int col = 0; col < size; col++) {
+            System.out.print((char) ('A' + col) + " ");
+        }
+        System.out.println();
+
+        for (int row = 0; row < size; row++) {
+
+            // row numbers (1–10)
+            System.out.printf("%2d ", row + 1);
+
+            for (int col = 0; col < size; col++) {
+
+                char display = grid[row][col];
+
+                // hide ships if needed
+                if (!showShips && display == 'S') {
+                    display = '~';
+                }
+
+                System.out.print(display + " ");
+            }
+
+            System.out.println();
+        }
+    }
+
+    // Optional: debugging helper
+    public void printDebug() {
+        printBoard(true);
+    }
+}
