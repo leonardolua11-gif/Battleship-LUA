@@ -1,0 +1,88 @@
+package gameCode;
+import java.util.Scanner;
+
+public class AIGame {
+
+    public static String toCoordinate(int row, int col) {
+        return (char) ('A' + row) + Integer.toString(col + 1);
+    }
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        Board playerBoard = new Board(10);
+        Board aiBoard = new Board(10);
+
+        // player options
+        int choice;
+
+        while (true) {
+            try {
+                System.out.print("Choose your preset (1-3): ");
+                choice = Integer.parseInt(scanner.nextLine());
+
+                if (choice >= 1 && choice <= 3) break;
+
+                System.out.println("Please enter 1, 2, or 3.");
+            } catch (Exception e) {
+                System.out.println("Invalid input. Try again.");
+            }
+        }
+
+        PresetBoards.load(playerBoard, choice);
+
+       //AI options
+        int aiChoice = (int)(Math.random() * 3) + 1;
+        PresetBoards.load(aiBoard, aiChoice);
+
+        System.out.println("\n Battleship Game Started!\n");
+
+        //loops until game is over
+        while (true) {
+
+           //player turn
+            System.out.println("\n=== YOUR BOARD ===");
+            playerBoard.printBoard(true);
+
+            System.out.println("\n=== ENEMY BOARD ===");
+            aiBoard.printBoard(false);
+
+            System.out.println("\nYour turn:");
+
+            HumanPlayer human = new HumanPlayer(playerBoard, scanner);
+            int[] move = human.chooseAttack();
+
+            String result = aiBoard.attack(move[0], move[1]);
+
+            System.out.println("You attacked " + toCoordinate(move[0], move[1]) + " → " + result);
+
+            // checks win
+            if (aiBoard.allShipsSunk()) {
+                System.out.println("\n You win! All enemy ships destroyed.");
+                aiBoard.printBoard(true);
+                break;
+            }
+
+            // AI Turn
+            System.out.println("\nAI turn:");
+
+            AIPlayer ai = new AIPlayer(playerBoard, 10);
+            int[] aiMove = ai.chooseAttack();
+
+            String aiResult = playerBoard.attack(aiMove[0], aiMove[1]);
+
+            System.out.println("AI attacked " + toCoordinate(aiMove[0], aiMove[1]) + " → " + aiResult);
+
+            //checks win
+            if (playerBoard.allShipsSunk()) {
+                System.out.println("\n AI wins! All your ships are destroyed.");
+                playerBoard.printBoard(true);
+                break;
+            }
+
+        }
+
+        scanner.close();
+    }
+}
