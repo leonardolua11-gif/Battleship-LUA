@@ -1,27 +1,29 @@
 package gameCode;
+
 import java.util.Random;
 
-public class AIPlayer extends Player {
+public class AIPlayer {
+
     private boolean[][] attacked;
-    private Random random;
+    private int size;
+    private Random random = new Random();
 
     public AIPlayer(Board board, int size) {
-        super(board);
-        attacked = new boolean[size][size];
-        random = new Random();
+        this.size = size;
+        this.attacked = new boolean[size][size];
     }
 
-    @Override
     public int[] chooseAttack() {
+
         int row, col;
 
         do {
-            row = random.nextInt(attacked.length);
-            col = random.nextInt(attacked.length);
+            row = random.nextInt(size);
+            col = random.nextInt(size);
         } while (attacked[row][col]);
 
         attacked[row][col] = true;
 
-        return new int[]{row, col};
+        return new int[]{col, row};
     }
 }
