@@ -1,48 +1,52 @@
 package gameCode;
+
 import java.util.Scanner;
 
-public class HumanPlayer extends Player {
+public class HumanPlayer {
+
+    private Board board;
     private Scanner scanner;
 
     public HumanPlayer(Board board, Scanner scanner) {
-        super(board);
+        this.board = board;
         this.scanner = scanner;
     }
 
-    @Override
     public int[] chooseAttack() {
 
         while (true) {
-            try {
-                System.out.print("Enter coordinate (A1 - J10): ");
-                String input = scanner.nextLine().toUpperCase().trim();
+            System.out.print("Enter attack (e.g. B1): ");
+            String input = scanner.nextLine().trim().toUpperCase();
 
-                int[] coords = parseCoordinate(input);
-                return coords;
-
-            } catch (Exception e) {
-                System.out.println("Invalid format! Example: B7 or J10");
+            if (input.length() < 2) {
+                System.out.println("Invalid format.");
+                continue;
             }
+
+            char letter = input.charAt(0);
+            String numberPart = input.substring(1);
+
+            if (letter < 'A' || letter > 'J') {
+                System.out.println("Column must be A-J.");
+                continue;
+            }
+
+            int col = letter - 'A';
+
+            int row;
+            try {
+                row = Integer.parseInt(numberPart) - 1;
+            } catch (Exception e) {
+                System.out.println("Invalid number.");
+                continue;
+            }
+
+            if (!board.isValidPosition(row, col)) {
+                System.out.println("Out of bounds.");
+                continue;
+            }
+
+            return new int[]{col, row};
         }
-    }
-
-
-    // Convert A1 → (0,0)
-    private int[] parseCoordinate(String input) {
-
-        if (input.length() < 2 || input.length() > 3) {
-            throw new IllegalArgumentException("Bad input");
-        }
-
-        char rowChar = input.charAt(0);
-        int row = rowChar - 'A';
-
-        int col = Integer.parseInt(input.substring(1)) - 1;
-
-        if (row < 0 || row >= 10 || col < 0 || col >= 10) {
-            throw new IllegalArgumentException("Out of bounds");
-        }
-
-        return new int[]{row, col};
     }
 }
