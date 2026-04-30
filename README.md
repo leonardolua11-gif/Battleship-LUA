@@ -19,7 +19,7 @@ The goal of Battleship is to sink all of the enemy ships before they sink yours.
 
 ---
 
-# Player vs Player (GameDriver)
+# Player vs Player (GameDriver) (Player vs Player is still in progress)
 - Both players use the same board setup
 - Players take turns entering coordinates
 - First player to sink all ships wins
@@ -49,7 +49,7 @@ When you attack, you will see:
 
 - **Hit!** → You hit part of a ship
 - **Miss!** → No ship at that location
-- **Hit and sunk!** → You destroyed an entire ship
+- **Hit and sunk!** → You destroyed an entire ship (This feature is not working yet)
 - **Already attacked!** → You picked that spot before
 - **Out of bounds!** → Invalid coordinate
 ---
