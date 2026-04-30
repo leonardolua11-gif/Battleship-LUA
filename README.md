@@ -1,8 +1,6 @@
 
 # Battleship Game Guide
-# Lua, Morris, and Williams
-
-# How to Play
+By: Lua, Morris, and Williams
 
 # Objective
 The goal of Battleship is to sink all of the enemy ships before they sink yours.
