@@ -52,23 +52,21 @@ When you attack, you will see:
 - **Already attacked!** → You picked that spot before
 - **Out of bounds!** → Invalid coordinate
 ---
-## Winning the Game
+# Winning the Game
 
 You win when: All enemy ships are destroyed
 The game will display: You win!
 
-```
+---
+
+# Class Overview
 
 ---
 
-# 🧩 Class Overview
-
----
-
-## 📦 Board
+# Board
 Handles the game grid and core logic.
 
-### Responsibilities:
+# Responsibilities:
 - Stores the 10x10 grid
 - Tracks ship positions
 - Handles attacks
@@ -77,10 +75,10 @@ Handles the game grid and core logic.
 
 ---
 
-## 🚢 Ship
+# Ship
 Represents a single ship on the board.
 
-### Responsibilities:
+# Responsibilities:
 - Stores size and position
 - Tracks hits
 - Determines if ship is sunk
@@ -88,79 +86,59 @@ Represents a single ship on the board.
 
 ---
 
-## ⚙️ ShipLogic
+# ShipLogic
 Base class for Ship.
 
-### Responsibilities:
+# Responsibilities:
 - Stores starting position
 - Provides shared ship data structure
 
 ---
 
-## 👤 HumanPlayer
+# HumanPlayer
 Handles player input.
 
-### Responsibilities:
+# Responsibilities:
 - Reads user input (A1–J10)
 - Converts input into coordinates
 - Validates moves
 
 ---
 
-## 🤖 AIPlayer
+# AIPlayer
 Controls computer moves.
 
-### Responsibilities:
+# Responsibilities:
 - Generates random attacks
 - Avoids repeating moves
 
 ---
 
-## 🧱 PresetBoards
+# PresetBoards
 Creates predefined ship layouts.
 
-### Responsibilities:
+# Responsibilities:
 - Loads ships into the board
 - Provides multiple difficulty/layout options
 
 ---
 
-## 🎮 AIGame
+# AIGame
 Main driver for Player vs Computer mode.
 
-### Responsibilities:
+# Responsibilities:
 - Runs full game loop
 - Alternates player and AI turns
 - Displays results and win condition
 
 ---
 
-## 🎮 GameDriver
+# GameDriver
 Main driver for Player vs Player mode.
 
-### Responsibilities:
+# Responsibilities:
 - Runs PvP game loop
 - Handles player input turns
 - Checks win condition
 
----
 
-# 🧠 Summary
-
-This project demonstrates:
-- Object-oriented programming
-- 2D array grid systems
-- Input validation
-- Game loop design
-- Turn-based mechanics
-
----
-```
-
----
-
-If you want, I can also:
-
-* turn this into a **PDF formatted report**
-* or make a **short 1-page submission version for class**
-* or help you add **diagrams of the board + ship placement**
