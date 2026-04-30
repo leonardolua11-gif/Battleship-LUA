@@ -56,7 +56,8 @@ public class Board {
     }
 
     // Attack logic
-    public String attack(int row, int col) {
+    public String attack(int col, int row) {
+
         if (!isValidPosition(row, col)) {
             return "Out of bounds!";
         }
