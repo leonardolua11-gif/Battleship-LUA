@@ -1,5 +1,6 @@
 
-# Battleship Game Guide (Java Project)
+# Battleship Game Guide
+# Lua, Morris, and Williams
 
 # How to Play
 
